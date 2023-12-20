@@ -16,7 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from socialapp import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path("register/",views.SignUpView.as_view(),name="sign_up"),
+    path('',views.signInView.as_view(),name="signin"),
+    path('index',views.IndexView.as_view(),name="index"),
+    path('logout',views.signoutView.as_view(),name="signout"),
+    path('profiles/<int:pk>/change',views.ProfileUpdateView.as_view(),name="profile_updates"),
+    path('profiles/<int:pk>',views.ProfileDetailView.as_view(),name="profile_detail"),
+    path('profiles/all',views.ProfileListView.as_view(),name="profile_list"),
+    path('post/<int:pk>/like',views.PostLikeView.as_view(),name="like"),
+    path('post/<int:pk>/comment/add',views.CommentView.as_view(),name="comment"),
+    path('profiles/<int:pk>/block',views.ProfileBlockView.as_view(),name="block"),
+    path('stories/add',views.StorieCreateView.as_view(),name="story_create")
+
+
+
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
